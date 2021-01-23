@@ -90,7 +90,7 @@ void MQTT_Client::sendWelcome() {
   status.remoteTune = configManager.getRemoteTune();
   status.telemetry3rd = configManager.getTelemetry3rd();
   status.testMode = configManager.getTestMode();
-  const size_t capacity = JSON_ARRAY_SIZE(2) + JSON_OBJECT_SIZE(11) + 22 + 20;
+  const size_t capacity = JSON_ARRAY_SIZE(2) + JSON_OBJECT_SIZE(12) + 22 + 20;
   DynamicJsonDocument doc(capacity);
   doc["station"] = configManager.getThingName();
   JsonArray station_location = doc.createNestedArray("station_location");
@@ -99,6 +99,7 @@ void MQTT_Client::sendWelcome() {
   doc["version"] = status.version;
   doc["git_version"] = status.git_version;
   doc["board"] = configManager.getBoard();
+  doc["mac"] = ESP.getEfuseMac();
   doc["tx"] = status.tx;
   doc["remoteTune"] = status.remoteTune;
   doc["telemetry3d"] = status.telemetry3rd;
