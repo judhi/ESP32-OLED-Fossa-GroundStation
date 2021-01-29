@@ -1,6 +1,7 @@
 /*
-  Display.h - Class responsible of controlling the display
+  Sensors.cpp - Class to handle Sensors attached to Ground Station
   
+  Contributed by Judhi Prasetyo @kreatif Jam-2021
   Copyright (C) 2020 @G4lile0, @gmag12 and @dev_4m1g0
 
   This program is free software: you can redistribute it and/or modify
@@ -17,22 +18,28 @@
   along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-#include "SSD1306.h"                         // https://github.com/ThingPulse/esp8266-oled-ssd1306
-#include "OLEDDisplayUi.h"                   // https://github.com/ThingPulse/esp8266-oled-ssd1306
-#include "../ConfigManager/ConfigManager.h"
-#include "../Status.h"
-#include "../Sensors/Sensors.h"
+#include "Sensors.h"
+int dhtPin = 25;
+DHTesp dht;
 
-void displayInit();
-void displayShowConnected();
-void displayShowWaitingMqttConnection();
-void displayShowInitialCredits();
-void displayShowApMode();
-void displayShowStaMode();
-void displayUpdate();
-void displayShowLoRaError();
-void displayShowRadioError();
+void Sensors::dhtInit() {
+  dht.setup(dhtPin, DHTesp::DHT11);
+  delay(100);
+  if (dht.getStatus() != 0) {
+    Serial.println("DHT sensor error status: " + String(dht.getStatusString()));
+	} else {
+    Serial.println("DHT sensor is ready!");
+  } 
+}
 
-extern Status status;
+float Sensors::getTemp() {
+  TempAndHumidity newValues = dht.getTempAndHumidity();
+  return newValues.temperature;
+}
 
-  
+float Sensors::getHumidity() {
+  TempAndHumidity newValues = dht.getTempAndHumidity();
+  return newValues.humidity;
+}
+
+

@@ -64,6 +64,7 @@
 #else
 #include "WProgram.h"
 #endif
+
 #include "src/ConfigManager/ConfigManager.h"
 #include "src/Comms/Comms.h"
 #include "src/Display/Display.h"
@@ -71,6 +72,7 @@
 #include "src/Status.h"
 #include "src/Radio/Radio.h"
 #include "src/ArduinoOTA/ArduinoOTA.h"
+#include "src/Sensors/Sensors.h"
 
 #if MQTT_MAX_PACKET_SIZE != 1000
 "Remeber to change libraries/PubSubClient/src/PubSubClient.h"
@@ -129,7 +131,11 @@ void wifiConnected() {
 void setup() {
   Serial.begin(115200);
   delay(299);
+
   Serial.printf("Fossa Ground station Version %d\n", status.version);
+  Sensors& sensor = Sensors::getInstance();
+  sensor.dhtInit();
+  
   configManager.setWifiConnectionCallback(wifiConnected);
   configManager.init();
   // make sure to call doLoop at least once before starting to use the configManager

@@ -25,6 +25,7 @@
 
 #include "../ConfigManager/ConfigManager.h"
 #include "../Status.h"
+#include "../Sensors/Sensors.h"
 #include <PubSubClient.h>
 #ifdef SECURE_MQTT
 #include <WiFiClientSecure.h>
@@ -132,8 +133,9 @@ private:
   const char* topicRemoteSat PROGMEM= "sat";
   const char* topicRemoteStatus PROGMEM= "status";
   const char* topicRemoteTest PROGMEM= "test";
-  
-  
+  const char* topicRemoteGsTemperature PROGMEM= "gstemperature";
+  const char* topicRemoteGsHumidity PROGMEM= "gshumidity";
+ 
   
 
 

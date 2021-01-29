@@ -1,6 +1,7 @@
 /*
-  Display.h - Class responsible of controlling the display
+  Sensors.h - Class to handle Sensors attached to Ground Station
   
+  Contributed by Judhi Prasetyo @kreatif Jan-2021
   Copyright (C) 2020 @G4lile0, @gmag12 and @dev_4m1g0
 
   This program is free software: you can redistribute it and/or modify
@@ -17,22 +18,26 @@
   along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-#include "SSD1306.h"                         // https://github.com/ThingPulse/esp8266-oled-ssd1306
-#include "OLEDDisplayUi.h"                   // https://github.com/ThingPulse/esp8266-oled-ssd1306
-#include "../ConfigManager/ConfigManager.h"
-#include "../Status.h"
-#include "../Sensors/Sensors.h"
+#ifndef SENSORS_H
+#define SENSORS_H
 
-void displayInit();
-void displayShowConnected();
-void displayShowWaitingMqttConnection();
-void displayShowInitialCredits();
-void displayShowApMode();
-void displayShowStaMode();
-void displayUpdate();
-void displayShowLoRaError();
-void displayShowRadioError();
+#include "DHTesp.h"
+#include "Ticker.h"
+#include "../Status.h"
+#include "../Mqtt/MQTT_Client.h"
 
 extern Status status;
 
-  
+class Sensors {
+public:
+ static Sensors& getInstance()
+  {
+    static Sensors instance; 
+    return instance;
+  }
+  void dhtInit();
+  float getTemp();
+  float getHumidity();
+};
+
+#endif

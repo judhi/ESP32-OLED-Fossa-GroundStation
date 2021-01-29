@@ -142,6 +142,11 @@ void  MQTT_Client::sendPong() {
   JsonArray station_location = doc.createNestedArray("station_location");
   station_location.add(configManager.getLatitude());
   station_location.add(configManager.getLongitude());
+  // Gs sensor values by Judhi
+  Sensors& sensor = Sensors::getInstance();
+  doc["station_temperature"] = sensor.getTemp();
+  doc["station_humidity"] = sensor.getHumidity();
+
   doc["rssi"] = status.lastPacketInfo.rssi;
   doc["snr"] = status.lastPacketInfo.snr;
   doc["frequency_error"] = status.lastPacketInfo.frequencyerror;
@@ -266,6 +271,11 @@ void  MQTT_Client::sendStatus() {
   JsonArray station_location = doc.createNestedArray("station_location");
   station_location.add(configManager.getLatitude());
   station_location.add(configManager.getLongitude());
+  // Gs sensor values by Judhi
+  Sensors& sensor = Sensors::getInstance();
+  doc["station_temperature"] = sensor.getTemp();
+  doc["station_humidity"] = sensor.getHumidity();
+
   doc["mode"] = status.modeminfo.modem_mode;
   doc["frequency"] = status.modeminfo.frequency;
   doc["satelite"] = status.modeminfo.satelite;

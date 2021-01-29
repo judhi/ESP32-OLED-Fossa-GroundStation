@@ -81,7 +81,10 @@ struct Local_Frame_Text {
   String  text = "123456789012345678901234567890";
 };
 
-
+struct SensorInfo {
+  float temperature  = 0;
+  float humidity = 0;
+};
 
 
 struct Status {
@@ -90,6 +93,7 @@ struct Status {
   SysInfo sysInfo;
   PacketInfo lastPacketInfo;
   ModemInfo modeminfo;
+  SensorInfo sensorinfo;
   float satPos[2] = {0, 0};
   uint8_t global_frame_text_leght = 0;
   uint8_t  local_frame_text_leght = 0;

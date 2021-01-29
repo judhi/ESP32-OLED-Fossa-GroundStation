@@ -92,7 +92,11 @@ void drawFrame1(OLEDDisplay *display, OLEDDisplayUiState* state, int16_t x, int1
   display->drawXbm(x , y + 6, Fossa_Logo_width, Fossa_Logo_height, Fossa_Logo_bits);
   display->setFont(ArialMT_Plain_10);
   display->setTextAlignment(TEXT_ALIGN_CENTER);
-  display->drawString( x+70, y + 42, "Sta: "+ String(ConfigManager::getInstance().getThingName()));
+  Sensors& sensor = Sensors::getInstance();
+  float dhtTem = sensor.getTemp();
+  float dhtHum = sensor.getHumidity();
+  display->drawString( x+70, y + 36, "T: "+ String(dhtTem) + "C      H: " + String(dhtHum) + "%" );
+  display->drawString( x+70, y + 44, "Sta: "+ String(ConfigManager::getInstance().getThingName()));
 }
 
 void drawFrame2(OLEDDisplay *display, OLEDDisplayUiState* state, int16_t x, int16_t y) {
@@ -101,8 +105,11 @@ void drawFrame2(OLEDDisplay *display, OLEDDisplayUiState* state, int16_t x, int1
   display->drawString(x,  y,  status.modeminfo.satelite);
   display->setTextAlignment(TEXT_ALIGN_CENTER);
   display->drawString(64+ x,  12 + y,  String(status.modeminfo.modem_mode) + " @ " + String(status.modeminfo.frequency) + "MHz" );
-//  display->drawString(x,  12 + y, "F:" );
-//  display->setTextAlignment(TEXT_ALIGN_RIGHT);
+
+  // Sensors& sensor = Sensors::getInstance();
+  // float dhtTem = sensor.getTemp();
+  // float dhtHum = sensor.getHumidity();
+  // display->drawString( x+70, y + 44, "T: "+ String(dhtTem) + "C      H: " + String(dhtHum) + "%" );
   
   display->setTextAlignment(TEXT_ALIGN_LEFT);
 
